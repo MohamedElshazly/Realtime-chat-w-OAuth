@@ -62,7 +62,7 @@ io.on('connection', socket => {
         })
 
         // emit a welcome message to connected user
-        socket.emit('message', formatMessage(bot, ` Welcome to AssCord, ${username}`));
+        socket.emit('message', formatMessage(bot, ` Welcome to PissCord, ${username}`));
 
         socket.broadcast.to(room).emit('message', formatMessage(bot, `${username} has joined the chat`));
 
