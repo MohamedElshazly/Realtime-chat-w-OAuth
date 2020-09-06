@@ -1,5 +1,4 @@
 const express = require('express');
-const keys = require('./keys');
 const mongoose = require('mongoose');
 const passportInit = require('./config/passport-config');
 const roomRoutes = require('./routes/room-routes');
@@ -9,22 +8,24 @@ const passport = require('passport');
 const http = require('http');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
-const userLeave = require('./utils/user');  
+const userLeave = require('./utils/user');
+require('dotenv').config();  
 
+// console.log(process.env);
 
 const Room = require('./models/room-model'); 
 const User = require('./models/user-model'); 
 
 const app = express();
 
-mongoose.connect(keys.mongodb.dbURI, {useNewUrlParser: true, useUnifiedTopology: true }, () => {
+mongoose.connect(process.env.DB_URI, {useNewUrlParser: true, useUnifiedTopology: true }, () => {
     console.log('connected to database');
 }); 
 
 app.set('view engine', 'ejs');
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000, 
-    keys : [keys.session.cookieKey]
+    keys : [process.env.COOKIE_KEY]
 }));
 app.use(passport.initialize()); 
 app.use(passport.session());

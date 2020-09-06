@@ -44,7 +44,7 @@ router.get('/join', checkIfAuthenticated, (req, res) => {
     });
 });
 
-router.post('/join', (req, res) => {
+router.post('/join', checkIfNoRooms, (req, res) => {
     User.findOneAndUpdate({googleID : req.user.googleID}, {room : req.body.room}, {new : true, useFindAndModify: false}).then((user) => {
         res.redirect(`/room/chat?username=${user.username}&room=${user.room}`)
     });    
@@ -71,6 +71,15 @@ function checkIfAuthenticated(req, res, next) {
 function checkIfInRoom(req, res, next) {
     if(req.user.room === ""){
         res.redirect('/room/home');
+    }else{
+        next();
+    }
+}
+
+function checkIfNoRooms(req, res, next) {
+    //a middleware to check if a user want to join when there're no rooms available 
+    if(!req.body.room){
+        res.redirect('/room/create');
     }else{
         next();
     }
