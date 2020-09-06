@@ -4,7 +4,8 @@
   "description": "poor man's discord with authentication",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server"
+    "dev": "nodemon server", 
+    "start" : "node server"
   },
   "author": "Omni",
   "license": "ISC",
